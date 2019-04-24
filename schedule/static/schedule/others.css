@@ -1,0 +1,75 @@
+#calendar-additions{
+    align-items:center;
+    float: right;
+    text-align: right;
+    padding-left:5px;
+}
+
+#calendar-additions li{
+    list-style: none;
+    display: inline;
+}
+
+button.button-submit{
+    background-color: #FAFAFA;
+    color: #999999;
+    border: none;
+    padding-left:0px;
+}
+
+.button-submit:hover {
+    background-color: #f0f0f5;
+}
+
+.button-submit:focus{
+    outline:0;
+}
+
+.button-submit:active{
+    outline:0;
+    background-color: #d7d7dd;
+}
+
+.button-submit svg{
+    width:14px;
+    height:14px;
+}
+#export-button{
+    background-color: transparent;
+    border:none;
+    fill: #FAFAFA;
+    color:#999999;
+    position: relative;
+    padding-left:4px;
+}
+
+#export-button:focus{
+    outline:0;
+}
+
+#export-button:hover {
+    background-color: #f0f0f5;
+}
+
+#export-button:active{
+    outline:0;
+    background-color: #d7d7dd;
+}
+
+#export_text{
+    display:inline-block;
+    color: #999999;
+    margin-bottom:1px;
+}
+
+#blank_row{
+    height:15px;
+    display: block;
+    width: 100%;
+}
+
+
+svg.enter-img{
+    fill:#999999;
+    margin-top:5px;
+}

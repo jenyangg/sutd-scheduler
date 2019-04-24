@@ -1,0 +1,77 @@
+#calendar-additions{
+    align-items:center;
+    float: right;
+}
+
+#calendar-additions li{
+    list-style: none;
+    display: inline;
+    margin-left: -5px;
+/*  somehow flex doesn't work
+    display: flex;
+    flex-direction: row-reverse;*/
+
+}
+
+button.button-submit{
+    background-color: #FAFAFA;
+    color: #999999;
+    border: none;
+    font-size: 1.2em;
+    position: relative;
+    top: -7px;
+}
+
+.button-submit:hover {
+    background-color: #f0f0f5;
+}
+
+.button-submit:focus{
+    outline:0;
+}
+
+.button-submit:active{
+    outline:0;
+    background-color: #d7d7dd;
+}
+
+.button-submit svg{
+    width:16px;
+    height:17px;
+}
+#export-button{
+    background-color: transparent;
+    border:none;
+    fill: #FAFAFA;
+    color:#999999;
+    position: relative;
+    padding-top: 2px;
+    padding-bottom: 1px;
+}
+
+#export-button:focus{
+    outline:0;
+}
+
+#export-button:hover {
+    background-color: #f0f0f5;
+}
+
+#export-button:active{
+    outline:0;
+    background-color: #d7d7dd;
+    padding: 3.1px 9.6px 0.8px 9.6px; /*top,bottom left,right OR top,right,bottom,left*/
+}
+
+#export_text{
+    display:inline-block;
+    color: #999999;
+    margin-left:5px;
+}
+
+#blank_row{
+    height:15px;
+    display: block;
+    width: 100%;
+}
+

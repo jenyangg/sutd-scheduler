@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'schedule/main.css' %}">
+
+    <title>Event Scheduler</title>
+
+
+    <!-- For fullcalendar -->
+    <link rel='stylesheet' href="..\..\static\schedule\fullcalendar.css">
+    <script src="..\..\static\schedule\jquery.min.js"></script>
+    <script src="..\..\static\schedule\moment.min.js"></script>
+    <script src="..\..\static\schedule\fullcalendar.js"></script>
+    <script src="..\..\static\schedule\fullCal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- For bootstrap-select (the filter) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.6/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.6/dist/js/bootstrap-select.min.js"></script>
+
+    <!--FontAwesome-->
+    <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
+
+    <script src="..\..\static\schedule\others.js"></script>
+    <link rel='stylesheet' href="..\..\static\schedule\others.css">
+
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="{% url 'schedule-home' %}">Event Scheduler</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'schedule-home' %}">Home</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Forms
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{% url 'request-form' %}">Schedule Request</a>
+                  <a class="dropdown-item" href="{% url 'input-module-info' %}">Input Module Information</a>
+                  <a class="dropdown-item" href="{% url 'input-class-info' %}">Input Class Information</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'add-event' %}">In-vivo Event</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'view-requests' %}">View Requests</a>
+                </div>
+              </li>
+              <a class="nav-item nav-link" href="{% url 'generate-schedule' %}">Generate Schedule</a>
+            </div>
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+              {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href = "{% url 'logout' %}">Logout</a>
+              {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+
+        <!-- THIS PART IS WRITTEN IN fullCal.js
+          <div id="schedule-filter">
+            <select class="selectpicker" multiple data-actions-box="true"
+            title="Filter">
+              <option>Course 1</option>
+              <option>Course 2</option>
+              <option>Events</option>
+            </select>
+          </div>
+        -->
+
+
+      <div id="calendar-additions">
+        <select class="selectpicker" multiple data-actions-box="true" id = "course-selector" onclick = "ahem()">
+        </select>
+
+        <button class='btn button-submit'>
+          <svg class="enter-img" width="124.73px" height="153.14px" viewBox="0 0 124.73 153.14">
+            <g>
+              <path d="M124.73,115.17H42.05c10.59,11.91,18.19,24.56,22.78,37.97H54.7C41.58,134.02,23.34,120.19,0,111.66v-6.89
+                    c23.34-8.53,41.58-22.36,54.7-41.48h10.12c-4.59,13.5-12.19,26.2-22.78,38.11h68.77V0h13.92V115.17z"/></path>
+            </g>
+          </svg>
+        </button>
+
+        <button class="btn" id='export-button'>
+          <i class="far fa-share-square"></i>
+          <p id='export_text'>Export</p>
+        </button>
+      </div>
+
+
+      <div id="calendar"></div>
+
+        </div>
+      </div>
+    </main>
+  </body>
+<!-- <script>function ahem(){
+            var select = document.getElementById("course-selector");
+            alert( "Handler for .click() called." );
+            var myobject = {
+                ValueA : 'Text A',
+                ValueB : 'Text B',
+                ValueC : 'Text C'
+            };
+            for(index in myobject) {
+                alert(index)
+                select.options[select.options.length] = new Option(myobject[index], index);
+                alert(select.options[select.options.length-1])
+            }
+}</script> -->
+<!-- <script>
+function loadDoc(){
+  var onFilter = function () {
+    var objecc = '';
+        $.ajax({
+            method: 'GET',
+            dataType: "JSON",
+            contentType: "application/json; charset=utf-8",
+            url: '/return_data/courses/',
+            data: obj,
+            success: function (d) {
+            objecc=d.data
+            }
+        });
+    }
+}
+</script>
+<script>
+    function changeText() {
+      x = document.getElementById("mySelect");
+      x.options[x.selectedIndex].text = "Melon";
+    }
+</script> -->
